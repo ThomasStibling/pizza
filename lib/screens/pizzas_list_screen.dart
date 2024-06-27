@@ -7,7 +7,6 @@ class PizzasListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final pizzaProvider = Provider.of<PizzaProvider>(context);
 
-    // Implement UI to display list of pizzas
     return Scaffold(
       appBar: AppBar(
         title: Text('Liste des Pizzas'),

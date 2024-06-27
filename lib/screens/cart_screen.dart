@@ -52,9 +52,7 @@ class CartScreen extends StatelessWidget {
             child: Text('Total: \€${cartProvider.totalPrice}'),
           ),
           ElevatedButton(
-            onPressed: () {
-              // Logic to proceed with order
-            },
+            onPressed: () {},
             child: Text('Passer commande'),
           ),
         ],
