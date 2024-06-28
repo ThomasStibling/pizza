@@ -1,3 +1,5 @@
+import 'package:new_pizza/models/ingredient.dart';
+
 class Pizza {
   final String id;
   final String name;
@@ -6,7 +8,7 @@ class Pizza {
   final List<String> ingredients;
   final String image;
   final String category;
-  final List<int> elements;
+  List<Ingredient> elements = [];
 
   Pizza(
       {required this.id,
@@ -27,7 +29,21 @@ class Pizza {
         ingredients: List<String>.from(json['ingredients']),
         image: json['image'],
         category: json['category'],
-        elements: List<int>.from(json['elements']));
+        elements: []);
+  }
+
+  factory Pizza.fromJsonWithIngredient(Map<String, dynamic> json) {
+    return Pizza(
+        id: json['id'],
+        name: json['name'],
+        price: json['price'].toDouble(),
+        base: json['base'],
+        ingredients: List<String>.from(json['ingredients']),
+        image: json['image'],
+        category: json['category'],
+        elements: json['elements']
+            .map<Ingredient>((i) => Ingredient.fromJson(i))
+            .toList());
   }
 
   Map<String, dynamic> toJson() => {

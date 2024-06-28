@@ -25,59 +25,57 @@ class PizzaDetailsScreen extends StatelessWidget {
               width: 200,
               height: 200,
             ),
-            SizedBox(height: 16),
-            Text('Name: ${pizza.name}', style: TextStyle(fontSize: 20)),
-            Text('Price: €${pizza.price}', style: TextStyle(fontSize: 20)),
-            Text('Base: ${pizza.base}', style: TextStyle(fontSize: 20)),
-            SizedBox(height: 16),
-            Text('Ingredients:', style: TextStyle(fontSize: 20)),
-            FutureBuilder<List<Ingredient>>(
-              future: ApiService.fetchListIngredients(pizza.elements),
+            const SizedBox(height: 16),
+            Text('Name: ${pizza.name}', style: const TextStyle(fontSize: 20)),
+            Text('Price: €${pizza.price}',
+                style: const TextStyle(fontSize: 20)),
+            Text('Base: ${pizza.base}', style: const TextStyle(fontSize: 20)),
+            const SizedBox(height: 16),
+            const Text('Ingredients:', style: TextStyle(fontSize: 20)),
+            FutureBuilder<Pizza>(
+              future: ApiService.fetchPizzaById(pizza.id),
               builder: (context, snapshot) {
+                print('erreur context $context');
+                print('erreur snapshot: $snapshot');
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else if (snapshot.hasData) {
-                  final ingredients = snapshot.data!;
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: ingredients.map((ingredient) {
-                      return Row(
-                        children: [
-                          Image.network(
-                            'https://pizzas.shrp.dev/assets/${ingredient.image}',
-                            width: 50,
-                            height: 50,
-                          ),
-                          SizedBox(width: 8),
-                          Text(
-                            ingredient.name,
-                            style: TextStyle(fontSize: 18),
-                          ),
-                        ],
+                  final Pizza pizza = snapshot.data!;
+                  return ListView.builder(
+                    itemCount: pizza.elements.length,
+                    itemBuilder: (context, index) {
+                      Ingredient ingredient = pizza.elements[index];
+                      return ListTile(
+                        leading: Image.network(
+                          'https://pizzas.shrp.dev/assets/${ingredient.image}',
+                          width: 50,
+                          height: 50,
+                        ),
+                        title: Text(ingredient.name),
                       );
-                    }).toList(),
+                    },
                   );
                 } else {
-                  return Text('No ingredients found');
+                  return const Text('No ingredients found');
                 }
               },
             ),
-            Spacer(),
+            const Spacer(),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
                   cartProvider.addItem(pizza);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
+                    const SnackBar(
                       content: Text('Pizza added to cart'),
                       duration: Duration(seconds: 2),
                     ),
                   );
                 },
-                child: Text('Add to Cart'),
+                child: const Text('Add to Cart'),
               ),
             ),
           ],

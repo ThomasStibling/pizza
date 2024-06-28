@@ -19,10 +19,11 @@ class ApiService {
     }
   }
 
-  Future<Pizza> fetchPizzaById(String id) async {
-    final response = await http.get(Uri.parse('$baseUrl/pizzas/$id'));
+  static Future<Pizza> fetchPizzaById(String id) async {
+    final response = await http.get(Uri.parse(
+        'https://pizzas.shrp.dev/items/pizzas/$id?fields[]=elements.ingredients_id.*&fields[]=*'));
     if (response.statusCode == 200) {
-      return Pizza.fromJson(json.decode(response.body));
+      return Pizza.fromJsonWithIngredient(json.decode(response.body));
     } else {
       throw Exception('Failed to load pizza');
     }
@@ -38,11 +39,12 @@ class ApiService {
     }
   }
 
-  static Future<List<Ingredient>> fetchListIngredients(
+  /*static Future<List<Ingredient>> fetchListIngredients(
       List<int> ingredientIds) async {
     List<Ingredient> ingredients = [];
     for (var id in ingredientIds) {
       final response = await http
+          //remettre en base url
           .get(Uri.parse('https://pizzas.shrp.dev/items/ingredients/$id'));
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);
@@ -52,7 +54,7 @@ class ApiService {
       }
     }
     return ingredients;
-  }
+  }*/
 
   Future<Ingredient> fetchIngredientById(int id) async {
     final response = await http.get(Uri.parse('$baseUrl/ingredients/$id'));
