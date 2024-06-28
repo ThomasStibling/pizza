@@ -8,7 +8,7 @@ class Pizza {
   final List<String> ingredients;
   final String image;
   final String category;
-  List<Ingredient> elements = [];
+  final List<Ingredient>? elements;
 
   Pizza(
       {required this.id,
@@ -34,16 +34,17 @@ class Pizza {
 
   factory Pizza.fromJsonWithIngredient(Map<String, dynamic> json) {
     return Pizza(
-        id: json['id'],
-        name: json['name'],
-        price: json['price'].toDouble(),
-        base: json['base'],
-        ingredients: List<String>.from(json['ingredients']),
-        image: json['image'],
-        category: json['category'],
-        elements: json['elements']
-            .map<Ingredient>((i) => Ingredient.fromJson(i))
-            .toList());
+      id: json['data']['id'],
+      name: json['data']['name'],
+      price: json['data']['price'].toDouble(),
+      base: json['data']['base'],
+      ingredients: List<String>.from(json['data']['ingredients']),
+      image: json['data']['image'],
+      category: json['data']['category'],
+      elements: json['data']['elements']
+          .map<Ingredient>((i) => Ingredient.fromJson(i))
+          .toList(),
+    );
   }
 
   Map<String, dynamic> toJson() => {

@@ -13,10 +13,10 @@ class Ingredient {
 
   factory Ingredient.fromJson(Map<String, dynamic> json) {
     return Ingredient(
-      id: json['id'],
-      name: json['name'],
-      category: json['category'],
-      image: json['image'],
+      id: json['ingredients_id']['id'],
+      name: json['ingredients_id']['name'],
+      category: json['ingredients_id']['category'],
+      image: json['ingredients_id']['image'],
     );
   }
 }

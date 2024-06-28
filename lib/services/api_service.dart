@@ -20,12 +20,18 @@ class ApiService {
   }
 
   static Future<Pizza> fetchPizzaById(String id) async {
-    final response = await http.get(Uri.parse(
-        'https://pizzas.shrp.dev/items/pizzas/$id?fields[]=elements.ingredients_id.*&fields[]=*'));
-    if (response.statusCode == 200) {
-      return Pizza.fromJsonWithIngredient(json.decode(response.body));
-    } else {
-      throw Exception('Failed to load pizza');
+    try {
+      final response = await http.get(Uri.parse(
+          'https://pizzas.shrp.dev/items/pizzas/$id?fields[]=elements.ingredients_id.*&fields[]=*'));
+      //https://pizzas.shrp.dev/items/pizzas/1fa92403-d4e0-401a-9a6a-b5450b5cecf2?fields[]=elements.ingredients_id.*&fields[]=*
+      if (response.statusCode == 200) {
+        return Pizza.fromJsonWithIngredient(json.decode(response.body));
+      } else {
+        throw Exception('Failed to load pizza');
+      }
+    } catch (e) {
+      print(e);
+      rethrow;
     }
   }
 

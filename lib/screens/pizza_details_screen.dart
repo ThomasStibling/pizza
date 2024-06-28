@@ -42,20 +42,26 @@ class PizzaDetailsScreen extends StatelessWidget {
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else if (snapshot.hasData) {
-                  final Pizza pizza = snapshot.data!;
-                  return ListView.builder(
-                    itemCount: pizza.elements.length,
-                    itemBuilder: (context, index) {
-                      Ingredient ingredient = pizza.elements[index];
-                      return ListTile(
-                        leading: Image.network(
-                          'https://pizzas.shrp.dev/assets/${ingredient.image}',
-                          width: 50,
-                          height: 50,
-                        ),
-                        title: Text(ingredient.name),
-                      );
-                    },
+                  final Pizza p = snapshot.data!;
+
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: p.elements!.length,
+                      itemBuilder: (context, index) {
+                        Ingredient ingredient = p.elements![index];
+
+                        print(ingredient);
+
+                        return ListTile(
+                          leading: Image.network(
+                            'https://pizzas.shrp.dev/assets/${ingredient.image}',
+                            width: 50,
+                            height: 50,
+                          ),
+                          title: Text(ingredient.name),
+                        );
+                      },
+                    ),
                   );
                 } else {
                   return const Text('No ingredients found');
