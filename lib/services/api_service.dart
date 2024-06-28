@@ -38,6 +38,22 @@ class ApiService {
     }
   }
 
+  static Future<List<Ingredient>> fetchListIngredients(
+      List<int> ingredientIds) async {
+    List<Ingredient> ingredients = [];
+    for (var id in ingredientIds) {
+      final response = await http
+          .get(Uri.parse('https://pizzas.shrp.dev/items/ingredients/$id'));
+      if (response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body);
+        ingredients.add(Ingredient.fromJson(jsonResponse));
+      } else {
+        throw Exception('Failed to load ingredient');
+      }
+    }
+    return ingredients;
+  }
+
   Future<Ingredient> fetchIngredientById(int id) async {
     final response = await http.get(Uri.parse('$baseUrl/ingredients/$id'));
     if (response.statusCode == 200) {

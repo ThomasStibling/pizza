@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:new_pizza/screens/login_screen.dart';
 import 'package:new_pizza/screens/pizza_details_screen.dart';
+import 'package:new_pizza/screens/signup_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:new_pizza/providers/pizza_provider.dart';
 import 'package:new_pizza/providers/cart_provider.dart';
 import 'package:new_pizza/screens/pizzas_list_screen.dart';
+
 import 'package:new_pizza/screens/cart_screen.dart';
 
 void main() {
@@ -27,9 +30,11 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: '/',
         routes: {
-          '/': (context) => PizzasListScreen(),
+          '/pizza_list': (context) => PizzasListScreen(),
           '/pizza_details': (context) => PizzaDetailsScreen(),
           '/cart': (context) => CartScreen(),
+          '/': (context) => LoginScreen(),
+          '/signup': (context) => SignupScreen(),
         },
       ),
     );

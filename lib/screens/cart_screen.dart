@@ -23,7 +23,7 @@ class CartScreen extends StatelessWidget {
                       'https://pizzas.shrp.dev/assets/${item.pizza.image}.jpg'),
                   title: Text(item.pizza.name),
                   subtitle: Text(
-                      'Prix: \$${item.pizza.price} x ${item.quantity} = \€${item.totalPrice}'),
+                      'Prix: \€${item.pizza.price} x ${item.quantity} = \€${item.totalPrice}'),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
