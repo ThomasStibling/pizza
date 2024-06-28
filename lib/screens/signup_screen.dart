@@ -9,7 +9,6 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
   final _authService = AuthService();
-  String _role = '';
   String _email = '';
   String _password = '';
 
